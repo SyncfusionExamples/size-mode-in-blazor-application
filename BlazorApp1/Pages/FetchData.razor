@@ -1,0 +1,136 @@
+﻿@page "/fetchdata"
+
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Grids
+
+
+<SfGrid DataSource="@Orders" AllowPaging="true" AllowFiltering="true" FrozenColumns="2" AllowSorting="true" Width="100%" AllowTextWrap="true"
+        AllowResizing="true" ShowColumnChooser="true" Toolbar="@(new string[] { "Add", "Edit", "Delete", "ColumnChooser"})">
+
+    <GridPageSettings PageSize="8"></GridPageSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Order.OrderID) HeaderText="Order ID" IsPrimaryKey="true" TextAlign="@TextAlign.Center" Width="100"></GridColumn>
+        <GridColumn Field=@nameof(Order.CustomerID) HeaderText="Customer Name" Width="100"></GridColumn>
+        <GridColumn Field=@nameof(Order.OrderDate) HeaderText=" Order Date" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="100"></GridColumn>
+        <GridColumn Field=@nameof(Order.Freight) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right" Width="100"></GridColumn>
+        <GridColumn Field=@nameof(Order.ShipCountry) HeaderText="Ship Country" Width="100"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+@code{
+    public static List<Order> Orders { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Orders = Enumerable.Range(1, 75).Select(x => new Order()
+        {
+            OrderID = 1000 + x,
+            CustomerID = (new string[] { "ALFKI", "ANANTR", "ANTON", "BLONP", "BOLID" })[new Random().Next(5)],
+            Freight = 2.1 * x,
+            OrderDate = DateTime.Now.AddDays(-x),
+            ShipCountry = (new string[] { "USA", "UK", "JAPAN" })[new Random().Next(3)]
+
+        }).ToList();
+    }
+
+    public class Order
+    {
+        public int OrderID { get; set; }
+        public string CustomerID { get; set; }
+        public double Freight { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public string ShipCountry { get; set; }
+    }
+}
+
+@*@using Syncfusion.Blazor.Grids
+    @using Syncfusion.Blazor.Data
+    @using Syncfusion.Blazor.Buttons
+    @using System.Collections.Immutable;
+    <SfButton Content="Reset" OnClick="Reset"></SfButton>
+    <SfButton Content="PageSize" OnClick="Reset1"></SfButton>
+    //Change the 21rem and 65rem values based on your browser page layout
+    <div style="width: calc(100vw - 14rem);height: calc(100vh - 2rem);">
+        <SfGrid ID="GridUpdate55" DataSource="@lstDealerProfiles" @ref="Grid" AllowFiltering="true" EnablePersistence="true" EnableVirtualization="true" Width="100%" Height="100%">
+            <GridColumns>
+                <GridColumn Field="@nameof(ViewDealerProfile.Partnerid)" AutoFit="true" IsPrimaryKey="true" HeaderText="Dealer #" Width="25" AllowEditing="false" AllowGrouping="false"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Dealername)" AutoFit="true" HeaderText="Dealer" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Dealerlocationname)" AutoFit="true" HeaderText="Location" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chremail)" AutoFit="true" HeaderText="Email" Width="50"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chraddress)" AutoFit="true" HeaderText="Address" Width="60"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chrcity)" AutoFit="true" HeaderText="City" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chrstate)" AutoFit="true" HeaderText="State" Width="20"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intzip)" AutoFit="true" HeaderText="Zip" Width="20" EditType="EditType.DefaultEdit"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intphone1)" AutoFit="true" HeaderText="Phone 1" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intphone2)" AutoFit="true" HeaderText="Phone 2" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intphone3)" AutoFit="true" HeaderText="Phone 3" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chrmaincontact)" AutoFit="true" HeaderText="Main Contact" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Chrsalesperson)" AutoFit="true" HeaderText="Sales Person" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intpricesheet)" AutoFit="true" HeaderText="Price Sheet" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intdefaultrtoco)" AutoFit="true" HeaderText="RTO Campaign" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intmileage)" AutoFit="true" HeaderText="Mileage" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Declotrate)" AutoFit="true" HeaderText="Rate" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Ccylotpay)" AutoFit="true" HeaderText="Pay" Width="40"></GridColumn>
+                <GridColumn Field="@nameof(ViewDealerProfile.Intdriver)" AutoFit="true" HeaderText="Driver Name" Width="40"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+    @code{
+        SfGrid<ViewDealerProfile> Grid { get; set; }
+    public List<ViewDealerProfile> lstDealerProfiles { get; set; }
+    public void Reset1() { }
+    public async Task Reset()
+    {
+        await Grid.ResetPersistData();
+
+        // Grid.Refresh();
+    }
+    protected override void OnInitialized()
+    {
+        lstDealerProfiles = Enumerable.Range(1, 2000).Select(x => new ViewDealerProfile()
+        {
+            Partnerid = x,
+            Dealername = (new string[] { "Nancy", "Andrew", "Janet", "Margaret", "Steven" })[new Random().Next(5)],
+            Chremail = (new string[] { "Davolio", "Fuller", "Leverling", "Peacock", "Buchanan" })[new Random().Next(5)],
+            Chraddress = (new string[] { "Sales Representative", "Vice President, Sales", "Sales Manager", "Inside Sales Coordinator" })[new Random().Next(4)],
+            Dealerlocationname = (new string[] { "USA", "UK", "UAE", "NED", "BER" })[new Random().Next(4)],
+            Chrcity = (new string[] { "Nancy", "Andrew", "Janet", "Margaret", "Steven" })[new Random().Next(5)],
+            Chrstate = (new string[] { "Davolio", "Fuller", "Leverling", "Peacock", "Buchanan" })[new Random().Next(5)],
+            Intzip = (new string[] { "Sales Representative", "Vice President, Sales", "Sales Manager", "Inside Sales Coordinator" })[new Random().Next(4)],
+            Intphone1 = (new string[] { "USA", "UK", "UAE", "NED", "BER" })[new Random().Next(4)],
+            Intphone2 = (new string[] { "Nancy", "Andrew", "Janet", "Margaret", "Steven" })[new Random().Next(5)],
+            Intphone3 = (new string[] { "Davolio", "Fuller", "Leverling", "Peacock", "Buchanan" })[new Random().Next(5)],
+            Chrmaincontact = (new string[] { "Sales Representative", "Vice President, Sales", "Sales Manager", "Inside Sales Coordinator" })[new Random().Next(4)],
+            Chrsalesperson = (new string[] { "Nancy", "Andrew", "Janet", "Margaret", "Steven" })[new Random().Next(5)],
+            Intdefaultrtoco = (new string[] { "Davolio", "Fuller", "Leverling", "Peacock", "Buchanan" })[new Random().Next(5)],
+            Intpricesheet = (new string[] { "Sales Representative", "Vice President, Sales", "Sales Manager", "Inside Sales Coordinator" })[new Random().Next(4)],
+            Intmileage = (new string[] { "USA", "UK", "UAE", "NED", "BER" })[new Random().Next(4)],
+
+
+        }).ToList();
+    }
+    public class ViewDealerProfile
+        {
+            public int? Partnerid { get; set; }
+
+            public string Dealername { get; set; }
+            public string Chremail { get; set; }
+            public string Chrcity { get; set; }
+            public string Chrstate { get; set; }
+            public string Intzip { get; set; }
+            public string Chraddress { get; set; }
+            public string Dealerlocationname { get; set; }
+            public string Intphone1 { get; set; }
+            public string Intphone2 { get; set; }
+            public string Intphone3 { get; set; }
+            public string Chrmaincontact { get; set; }
+            public string Chrsalesperson { get; set; }
+            public string Intdefaultrtoco { get; set; }
+            public string Intpricesheet { get; set; }
+            public string Intmileage { get; set; }
+            public string Ccylotpay { get; set; }
+            public string Declotrate { get; set; }
+            public string Intdriver { get; set; }
+        }
+        }*@
