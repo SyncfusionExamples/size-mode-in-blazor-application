@@ -1,0 +1,51 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Buttons;
+@using Syncfusion.Blazor.Popups
+
+<p> Size-modes for application </p>
+<p> This demo shows the Size-Modes applied for Syncfusion Control </p>
+
+<button @onclick="ontouch">Touch Mode</button>
+<button @onclick="onmouse">Mouse Mode</button>
+
+<div class="@check">
+    <SfCalendar TValue="DateTime?" Value="@DateValue"></SfCalendar>
+</div>
+
+<div class="@check">
+    <SfButton> Button </SfButton>
+</div>
+
+<div class="@check">
+    <SfCheckBox Label="checked" @bind-Checked="isChecked"></SfCheckBox>
+
+    @code
+    {
+        private bool isChecked = true;
+    }
+</div>
+
+<style>
+    .e-bigger {
+        font-size: x-large;
+    }
+</style>
+
+@code {
+
+    public DateTime? DateValue { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28);
+
+    public string check { get; set; }
+
+    public void ontouch()
+    {
+        check = "e-bigger";
+    }
+
+    public void onmouse()
+    {
+        check = "";
+    }
+}
