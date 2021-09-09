@@ -7,24 +7,19 @@
 <p> Size-modes for application </p>
 <p> This demo shows the Size-Modes applied for Syncfusion Control </p>
 
-<button @onclick="ontouch">Touch Mode</button>
-<button @onclick="onmouse">Mouse Mode</button>
+<button @onclick="onTouch">Touch Mode</button>
+<button @onclick="onMouse">Mouse Mode</button>
 
-<div class="@check">
+<div class="@touchCSS">
     <SfCalendar TValue="DateTime?" Value="@DateValue"></SfCalendar>
 </div>
 
-<div class="@check">
+<div class="@touchCSS">
     <SfButton> Button </SfButton>
 </div>
 
-<div class="@check">
+<div class="@touchCSS">
     <SfCheckBox Label="checked" @bind-Checked="isChecked"></SfCheckBox>
-
-    @code
-    {
-        private bool isChecked = true;
-    }
 </div>
 
 <style>
@@ -34,18 +29,19 @@
 </style>
 
 @code {
+    private bool isChecked = true;
 
     public DateTime? DateValue { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28);
 
-    public string check { get; set; }
+    public string touchCSS { get; set; }
 
-    public void ontouch()
+    public void onTouch()
     {
-        check = "e-bigger";
+        touchCSS = "e-bigger";
     }
 
-    public void onmouse()
+    public void onMouse()
     {
-        check = "";
+        touchCSS = "";
     }
 }
