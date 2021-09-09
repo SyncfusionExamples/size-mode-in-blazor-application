@@ -7,8 +7,8 @@
 <p> Size-modes for application </p>
 <p> This demo shows the Size-Modes applied for Syncfusion Control </p>
 
-<button @onclick="onTouch">Touch Mode</button>
-<button @onclick="onMouse">Mouse Mode</button>
+<button @onclick="OnTouch">Touch Mode</button>
+<button @onclick="OnMouse">Mouse Mode</button>
 
 <div class="@touchCSS">
     <SfCalendar TValue="DateTime?" Value="@DateValue"></SfCalendar>
@@ -35,12 +35,12 @@
 
     public string touchCSS { get; set; }
 
-    public void onTouch()
+    public void OnTouch()
     {
         touchCSS = "e-bigger";
     }
 
-    public void onMouse()
+    public void OnMouse()
     {
         touchCSS = "";
     }
